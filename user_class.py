@@ -4,7 +4,7 @@ class User:
         self.id = id
         self.username = username
         self.followed_wallets = []
-        self.is_logged = True 
+        self.is_logged = False 
 
     def add_new_wallet(self, wallet):
         self.followed_wallets.append(wallet)

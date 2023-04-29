@@ -25,8 +25,9 @@ def register():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-        db_operations.register(f"'{username}'", f"'{password}'")
-
+        db_operations.register(f"{username}", f"{password}")
+        user_id = db_operations.get_id(username)
+        user = User(id=user_id,username=username)
         return f"user {username} created succesfully"
     else:
         return render_template('register_website.html')

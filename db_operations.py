@@ -11,13 +11,13 @@ def register(username, password):
     cur = conn.cursor()
 
     cur.execute(f"""INSERT INTO users (username, user_pwd, creation_date)
-    values ({username}, {password}, CURRENT_DATE)    
+    values ('{username}', '{password}', CURRENT_DATE)    
     """)
 
     conn.commit()
 
     
-    cur.execute(f"""SELECT * FROM users where username={username} and user_pwd={password}    
+    cur.execute(f"""SELECT * FROM users where username='{username}' and user_pwd='{password}'    
     """)
     
     user_data = cur.fetchall()
@@ -58,6 +58,29 @@ def log_in(username, password):
             return f'{username} logged succesfully'
         else:
             return 'there is no such user, please try once again'
+        
+def get_id(username):
+    conn = psycopg2.connect(
+        host="localhost",
+        database="crypto_tracker",
+        user="postgres",
+        password=os.getenv('CWT_DB_PASS'))
+    
+    cur = conn.cursor()
+
+    cur.execute(f"""SELECT * FROM users WHERE username='{username}'    
+    """)
+
+    db_record = cur.fetchall()
+    user_id = db_record[0][0]
+
+    conn.commit()
+
+    cur.close()
+    conn.close()
+
+    return user_id
 
 # print(register("Many", "PawelJumper203"))
 # print(log_in("Many", "PawelJumper203"))
+# get_id('Many')
