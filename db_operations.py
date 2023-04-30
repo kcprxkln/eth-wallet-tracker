@@ -55,9 +55,9 @@ def log_in(username, password):
         conn.close()
 
         if len(db_record) > 0:
-            return f'{username} logged succesfully'
+            return True
         else:
-            return 'there is no such user, please try once again'
+            return False
         
 def get_id(username):
     conn = psycopg2.connect(
