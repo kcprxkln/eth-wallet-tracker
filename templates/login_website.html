@@ -8,16 +8,19 @@
     <body>
         <h2>Log in:</h2>
         <form action="login" method="POST">
-
-            <label for="username"> username </label>
+            {{ form.csrf_token }}  
+            {{ form.username.label }}
+            {{ form.username(size=24) }}
+            {{ form.password.label }}
+            {{ form.password(size=24)}}
+            <!-- <label for="username"> username </label>
             <input type="text" id="username" name="username" required>
             
             <br>
-            
             <label for="password"> password </label>
-            <input type="text" id="password" name="password" required>
-            <input type="submit" value="login">
-
+            <input type="text" id="password" name="password" required>  -->
+            {{ form.submit }}
+            <!-- <input type="submit" value="login"> -->
         </form>
 
     </body>
