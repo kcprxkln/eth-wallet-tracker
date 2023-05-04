@@ -2,6 +2,7 @@ import psycopg2
 import os 
 
 def register(username, password):
+
     conn = psycopg2.connect(
         host="localhost",
         database="crypto_tracker",
@@ -10,13 +11,16 @@ def register(username, password):
     
     cur = conn.cursor()
 
-    cur.execute(f"""INSERT INTO users (username, user_pwd, creation_date)
-    values ('{username}', '{password}', CURRENT_DATE)    
-    """)
-
+    try:
+        cur.execute(f"""INSERT INTO users (username, user_pwd, creation_date)
+        values ('{username}', '{password}', CURRENT_DATE)    
+        """)
+    except:
+        print(f'Username {username} already exist.')
+        return False
     conn.commit()
 
-    
+
     cur.execute(f"""SELECT * FROM users where username='{username}' and user_pwd='{password}'    
     """)
     
@@ -29,6 +33,7 @@ def register(username, password):
     cur.close()
     conn.close()
 
+    return True
 
 def log_in(username, password):
     conn = psycopg2.connect(
