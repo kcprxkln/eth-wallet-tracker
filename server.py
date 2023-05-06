@@ -69,7 +69,7 @@ def register():
     else:
         return render_template('register_website.html', form=form, error=error)
     
-@app.route('/wallet/<address>')
+@app.route('/wallet/<address>', methods=['GET', 'POST'])
 def wallet_page(address):
     wallet_balance = eth_data_r.wallet_balance(address)
     wallet_transactions = eth_data_r.wallet_transactions(address)

@@ -10,7 +10,8 @@
     <br>
     <ul>
     {% for transaction in transactions %}
-    <li> From: {{transaction['from']}} To: {{transaction['to']}}, amount: {{transaction['value']}}ETH </li>
+    <li> From: {{transaction['from']}} To: {{transaction['to']}}, amount: {{transaction['value']}}ETH <br>
+    {{transaction['time']}}</li>
     {% endfor %}
     </ul>
 </body>
