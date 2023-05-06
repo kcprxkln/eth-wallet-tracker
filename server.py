@@ -1,16 +1,16 @@
 from flask import Flask, render_template, request, redirect, url_for
 from forms import Login, Register
+from models import User
 import db_operations
-from user_class import User
+from eth_data_requests import ApiDataFetcher
+import os
+
+ETHERSCAN_APIKEY = os.getenv('etherscan_key')
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 app.config['SECRET_KEY'] = 'justaplaceholder'
 
-# class login_form(FlaskForm):
-#     username = StringField('Username', validators=[DataRequired()])
-#     password = StringField('Password', validators=[DataRequired()])
-#     submit = SubmitField('Log in')
-    
+eth_data_r = ApiDataFetcher(ETHERSCAN_APIKEY)
 
 @app.route('/')
 def home():
@@ -69,5 +69,11 @@ def register():
     else:
         return render_template('register_website.html', form=form, error=error)
     
+@app.route('/wallet/<address>')
+def wallet_page(address):
+    wallet_balance = eth_data_r.wallet_balance(address)
+    wallet_transactions = eth_data_r.wallet_transactions(address)
+    return render_template('wallet_page.html', page=address, balance=wallet_balance , transactions=wallet_transactions)
+
 if __name__ == '__main__':
     app.run()
