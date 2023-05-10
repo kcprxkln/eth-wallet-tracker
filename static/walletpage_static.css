@@ -1,0 +1,76 @@
+body {
+    font-family: monospace;
+    /* background-image: url("bg.jpg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat; */
+    max-width: 1080px;
+  }
+
+.home-icon {
+    transition-duration: 150ms;
+    color: #3484E0
+}
+
+.home-icon:hover {
+    transition-duration: 150ms;
+    color: #2866AD;
+    cursor: pointer;
+}
+
+#wallet-address {
+    text-align: center;
+    font-size: 2em;
+    font-weight: bolder;
+    color: #181818;
+}
+
+#wallet-balance {
+    text-align: center;
+}
+
+.btn {
+    color: #3484E0;
+    border-color: #3484E0;
+}
+
+.btn:hover {
+    background-color: #3484E0;
+    color: white;
+}
+
+.transaction-card {
+    justify-content: center;
+    color: rgb(3, 255, 11);
+    background-color: rgb(0, 0, 0);
+    height: 100px;
+}
+
+.transaction-card-out {
+    justify-content: center;
+    color: rgb(255, 64, 0);
+    background-color: rgb(0, 0, 0);
+    height: 100px;
+}
+
+.transaction-card-2 {
+    text-align: center;
+    justify-content: center;
+    color: #3484E0;
+    background-color: white;
+    height: 100px;
+    border: 1.5px solid #3484E0;
+    border-radius: 10px;
+}
+
+p {
+    margin-bottom: 0rem;
+}
+
+#tx-info {
+    text-align: left;
+}
+
+#amount {
+    text-align: right;
+}
