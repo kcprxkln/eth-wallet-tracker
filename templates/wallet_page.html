@@ -17,9 +17,9 @@
             </div>
             <div class="col-4"></div>
             <div class="col-4">
-            <form class="d-flex wallet-search" role="search">
-                <input class="form-control me-2" type="search" placeholder="wallet address" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <form class="d-flex wallet-search" role="search" method="POST">
+                    <input class="form-control me-2" type="search" placeholder="wallet address" aria-label="Search" name="wallet_address" >
+                    <button class="btn btn-outline-success" type="submit" value="Submit">Search</button>
                 </form> 
             </div> 
         </div>
@@ -32,8 +32,7 @@
             <div class="row mt-2" id="wallet-balance">
                 <div class="col-5"></div>
                 <div class="col-2">
-                    <div class="eth-amount"> {{ balance }} <img id="eth-logo" src="../static/eth_logo.png" height="18">
-                    </div>
+                    <div class="eth-amount"> {{ balance }} <img id="eth-logo" src="../static/eth_logo.png" height="18"></div>
                 </div>
         </div>
     </div>
