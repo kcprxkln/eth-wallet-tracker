@@ -26,7 +26,6 @@ class ApiDataFetcher:
         wei_value = int(response.json()['result'])
         return self.convert_to_eth(wei_val=wei_value)
 
-
     def wallet_transactions(self, wallet: str):
         
         params = {
@@ -53,13 +52,19 @@ class ApiDataFetcher:
             source = item["from"]
             target = item["to"]
             value = int(item["value"])
+            way = ""
+            if source.lower() == wallet.lower():
+                way = "OUT" 
+            else:
+                way = "IN"   
 
             if value != 0: #ensures that this is ETH transaction, not any other erc-20 token
                 transaction = {
                     "time" : date_and_time,
                     "from" : source,
                     "to" : target,
-                    "value" : self.convert_to_eth(value) 
+                    "value" : self.convert_to_eth(value), 
+                    "way" : way
                 }
 
                 transactions.append(transaction)

@@ -72,8 +72,10 @@ def register():
 @app.route('/wallet/<address>', methods=['GET', 'POST'])
 def wallet_page(address):
     if request.method == 'POST':
-        wallet_address = request.form.get('wallet_address')
-        return redirect(url_for("wallet_page", address=wallet_address))
+        if 'search_wallet' in request.form:
+            wallet_address = request.form.get('wallet_address')
+            return redirect(url_for("wallet_page", address=wallet_address))
+        
     
     wallet_balance = eth_data_r.wallet_balance(address)
     wallet_transactions = eth_data_r.wallet_transactions(address)
