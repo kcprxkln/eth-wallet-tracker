@@ -1,28 +1,23 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title> Register - cwt </title>
-        <meta charset="UTF-8">
-    </head>
-    <body>
-        <h2> Register </h2>
-        <form action="register" method="POST">
-            {{ form.csrf_token }}  
-            {{ form.username.label }}
-            {{ form.username(size=24) }}
-            {{ form.password.label }}
-            {{ form.password(size=24)}}
-   
-            <!-- <label for="username"> username </label>
-            <input type="text" id="username" name="username" required>
+{% extends 'base.html' %}
 
-            <br>
+{% block main %}
+<h2> Register </h2>
+<form action="register" method="POST">
+    {{ form.csrf_token }}  
+    {{ form.username.label }}
+    {{ form.username(size=24) }}
+    {{ form.password.label }}
+    {{ form.password(size=24)}}
 
-            <label for="password"> password </label>
-            <input type="text" id="password" name="password" required>
+    <!-- <label for="username"> username </label>
+    <input type="text" id="username" name="username" required>
 
-            <input type="submit" value="register"> -->
-            {{ form.submit }}
-        </form>
-    </body>
-</html>
+    <br>
+
+    <label for="password"> password </label>
+    <input type="text" id="password" name="password" required>
+
+    <input type="submit" value="register"> -->
+    {{ form.submit }}
+</form>
+{% endblock %}
