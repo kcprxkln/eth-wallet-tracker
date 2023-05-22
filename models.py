@@ -1,30 +1,15 @@
+from flask_login import UserMixin
+from sqlalchemy.sql import func 
+from testy import db 
 
-class User():
-    def __init__(self, id, username, password):
-        self.id = id
-        self.username = username
-        self.password = password
-        self.followed_wallets = []
-        self.is_logged = False 
+class Users(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(1000), unique=True)
+    password = db.Column(db.String(1000))
+    date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    followed_wallets = db.relationship('Wallets') 
 
-    def add_new_wallet(self, wallet):
-        self.followed_wallets.append(wallet)
-
-    def remove_wallet(self, wallet):
-        self.followed_wallets.remove(wallet)
-
-    
-class Wallet():
-    def __init__(self, id, transactions):
-        self.id = id
-        self.transactions = transactions
-
-    def new_transaction(self, Transaction):
-        self.transactions.append(Transaction)
-
-class Transaction:
-    def __init__(self, source, target, amount):
-        self.id = id
-        self.source = source
-        self.target = target
-        self.amount = amount
+class Wallets(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(1000))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
