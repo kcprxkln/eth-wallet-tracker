@@ -1,9 +1,5 @@
 body {
     font-family: monospace;
-    /* background-image: url("bg.jpg");
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat; */
   }
 
 .home-icon {
@@ -73,3 +69,28 @@ p {
 #amount {
     text-align: right;
 }
+
+#profile-btn {
+    color: white;
+    border-width: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.wallet {
+    font-style: italic;
+}
+
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .remove {
+    margin-left: auto;
+  }
+  
