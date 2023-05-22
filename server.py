@@ -3,7 +3,7 @@ from forms import Login, Register
 from flask_login import LoginManager, login_user, login_required, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import Users, Wallets
-from testy import db
+from db_operations import db
 from eth_data_requests import ApiDataFetcher
 import os
 
