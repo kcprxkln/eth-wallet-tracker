@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block main %}
+        <ul>
+            {% for wallet in user.followed_wallets %}
+            <li>
+            {{ wallet.name }}
+            </li>
+            {% endfor %}
+        </ul>
+{% endblock %}
