@@ -29,10 +29,17 @@
             <div class="col-2">
                 <div class="eth-amount"> 
                     {% if user.is_authenticated %}
-                    <form method="POST">
-                        <input type="hidden">
-                        <button type="submit">FOLLOW</button>
-                    </form> 
+                        {% if not is_f %}
+                            <form method="POST">
+                                <input type="hidden">
+                                <button type="submit">FOLLOW</button>
+                            </form>
+                        {% else %}
+                            <form method="POST">
+                                <input type="hidden">
+                                <button type="submit">UNFOLLOW</button>
+                            </form>
+                        {% endif %}
                     {% endif %}
                     {{ balance }} 
                     <img id="eth-logo" src="../static/eth_logo.png" height="18">

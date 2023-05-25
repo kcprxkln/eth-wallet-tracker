@@ -28,10 +28,12 @@ with app.app_context():
 
 eth_data_r = ApiDataFetcher(ETHERSCAN_APIKEY)
 
+
 @app.route('/')
 @login_required
 def home():
     return render_template('home.html', user=current_user)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -90,10 +92,16 @@ def logout():
 
 @app.route('/wallet/<address>', methods=['GET', 'POST'])
 def wallet_page(address):
+    
+    is_followed = False
+    for wallet in current_user.followed_wallets:
+        if wallet.name == address:
+            is_followed = True
+
     if request.method == 'POST':
         if 'search_wallet' in request.form:
             wallet_address = request.form.get('wallet_address')
-            wallet = Wallet.filter_by(name=wallet_address)
+            wallet = Wallet.query.filter_by(name=wallet_address).first() 
             if wallet:
                 return redirect(url_for("wallet_page", address=wallet_address))
             else:
@@ -101,15 +109,19 @@ def wallet_page(address):
                 db.session.add(new_wallet)
                 db.session.commit()
                 return redirect(url_for("wallet_page", address=wallet_address))
+        
         else:
-            new_followed_wallet = Wallet(name=address, user_id=current_user.id)
-            db.session.add(new_followed_wallet)
-            db.session.commit()
-            flash(f'Wallet {address} added to followed!', category='success')
+            if is_followed:
+                pass 
+            else: 
+                new_followed_wallet = Wallet(name=address, user_id=current_user.id)
+                db.session.add(new_followed_wallet)
+                db.session.commit()
+                flash(f'Wallet {address} added to followed!', category='success')
 
     wallet_balance = eth_data_r.wallet_balance(address)
     wallet_transactions = eth_data_r.wallet_transactions(address)
-    return render_template('wallet_page.html', page=address, balance=wallet_balance , transactions=wallet_transactions, user=current_user)
+    return render_template('wallet_page.html', page=address, balance=wallet_balance , transactions=wallet_transactions, user=current_user, is_f=is_followed)
 
 
 if __name__ == '__main__':
