@@ -112,7 +112,12 @@ def wallet_page(address):
         
         else:
             if is_followed:
-                pass 
+                wallet = Wallet.query.get(wallet.id)
+                if wallet:
+                    if wallet.user_id == current_user.id:
+                        db.session.delete(wallet)
+                        db.session.commit()
+                        flash(f'Wallet {address} removed from the followed', category='success')
             else: 
                 new_followed_wallet = Wallet(name=address, user_id=current_user.id)
                 db.session.add(new_followed_wallet)
