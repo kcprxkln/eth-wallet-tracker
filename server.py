@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, flash
 from forms import Login, Register
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -7,6 +7,7 @@ from db_operations import db
 from eth_data_requests import ApiDataFetcher
 import homepage_wallet_data
 import os
+import string
 
 ETHERSCAN_APIKEY = os.getenv('etherscan_key')
 DB_NAME = "database"
@@ -24,10 +25,22 @@ login_manager.init_app(app)
 def load_user(id):
     return User.query.get(int(id))
 
+def check_if_wallet_exists(wallet_address):
+    for letter in wallet_address:
+        if letter not in all_digits_and_letters:
+            return False
+        
+    if len(wallet_address) != 42:
+        return False
+    
+    return True
+
 with app.app_context():
     db.create_all()
 
 eth_data_r = ApiDataFetcher(ETHERSCAN_APIKEY)
+
+all_digits_and_letters = list(string.digits + string.ascii_letters)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -36,9 +49,15 @@ def home():
     if request.method == 'POST':
         if 'search_wallet' in request.form:
             wallet_address = request.form.get('wallet_address')
+
+            if not check_if_wallet_exists(wallet_address=wallet_address):
+                return render_template('bad_address.html')
+            
             wallet = Wallet.query.filter_by(name=wallet_address).first() 
+            
             if wallet:
                 return redirect(url_for("wallet_page", address=wallet_address))
+            
             else:
                 new_wallet = Wallet(name=new_wallet)
                 db.session.add(new_wallet)
@@ -62,6 +81,7 @@ def login():
         username = form.username.data
         password = form.password.data
         user = User.query.filter_by(username=username).first()
+        
         if user: 
             if check_password_hash(user.password, password):
                 login_user(user, remember=True)
@@ -111,7 +131,10 @@ def logout():
 
 @app.route('/wallet/<address>', methods=['GET', 'POST'])
 def wallet_page(address):
-    
+
+    if not check_if_wallet_exists(wallet_address=address):
+                return render_template('bad_address.html')
+
     is_followed = False
     for wallet in current_user.followed_wallets:
         if wallet.name == address:
@@ -120,7 +143,12 @@ def wallet_page(address):
     if request.method == 'POST':
         if 'search_wallet' in request.form:
             wallet_address = request.form.get('wallet_address')
+
+            if not check_if_wallet_exists(wallet_address=wallet_address):
+                return render_template('bad_address.html')
+            
             wallet = Wallet.query.filter_by(name=wallet_address).first() 
+
             if wallet:
                 return redirect(url_for("wallet_page", address=wallet_address))
             else:
@@ -150,6 +178,23 @@ def wallet_page(address):
 
 @app.route('/profile/followed_wallets', methods=['GET', 'POST'])
 def followed_wallets_page():
+    if request.method == 'POST':
+        if 'search_wallet' in request.form:
+            wallet_address = request.form.get('wallet_address')
+            
+            if not check_if_wallet_exists(wallet_address=wallet_address):
+                return render_template('bad_address.html')
+            
+            wallet = Wallet.query.filter_by(name=wallet_address).first() 
+            
+            if wallet:
+                return redirect(url_for("wallet_page", address=wallet_address))
+            else:
+                new_wallet = Wallet(name=new_wallet)
+                db.session.add(new_wallet)
+                db.session.commit()
+                return redirect(url_for("wallet_page", address=wallet_address))
+                
     all_followed_wallets = []
     for wallet in current_user.followed_wallets:
         all_followed_wallets.append(wallet.name)

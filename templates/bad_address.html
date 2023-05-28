@@ -18,22 +18,7 @@
             </form> 
         </div> 
     </div>
-    <div class="row mt-4">
-        <div class="col-4"></div>
-        <div class="col-4">
-        <h3>Followed wallets <span class="badge bg-secondary">{{ followed_wallets_qty }}</span></h3>  
-        </div>
-        <div class="col-4"></div>
-    </div>
 
-<div class="row mt-3">
-    <ul class="list-group list-group-flush">
-    {% for wallet in all_followed_wallets %}
-      <li class="list-group-item">
-        <a href="{{url_for('wallet_page', address=wallet)}}">{{ wallet }}</a>
-        <span class="remove"><a href="#">✖</span>
-      </li>
-    {% endfor %}
-    </ul>
-  </div>
+<h1>No such wallet!</h1>
+<h2> Please ensure that you provided right eth address. </h2>
 {% endblock %}
