@@ -11,8 +11,8 @@
                 </a>
               
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Followed wallets</a></li>
-                  <li><a class="dropdown-item" href="#">Logout</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('followed_wallets_page')}}">Followed wallets</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('logout')}}">Logout</a></li>
                 </ul>
               </div>
         </div>
@@ -33,7 +33,7 @@
                     <p id="tx-info">{{ transaction['way']}}, {{transaction['time']}}</p>
                        <p><a href='#' class="wallet">{{ transaction['from'] }}</a></p>
                        <p>to <a href="#" class="wallet">{{ transaction['to'] }}</a></p>
-                    <p id="amount"> {{ transaction['value'] }}ETH</p>
+                    <p id="amount"> {{ transaction['value'] }} ETH</p>
         </div>
             <div class="col-3"></div>
     </div>

@@ -30,9 +30,21 @@ with app.app_context():
 eth_data_r = ApiDataFetcher(ETHERSCAN_APIKEY)
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
+    if request.method == 'POST':
+        if 'search_wallet' in request.form:
+            wallet_address = request.form.get('wallet_address')
+            wallet = Wallet.query.filter_by(name=wallet_address).first() 
+            if wallet:
+                return redirect(url_for("wallet_page", address=wallet_address))
+            else:
+                new_wallet = Wallet(name=new_wallet)
+                db.session.add(new_wallet)
+                db.session.commit()
+                return redirect(url_for("wallet_page", address=wallet_address))
+            
     all_followed_wallets = []
     for wallet in current_user.followed_wallets:
         all_followed_wallets.append(wallet.name)
@@ -134,6 +146,17 @@ def wallet_page(address):
     wallet_balance = eth_data_r.wallet_balance(address)
     wallet_transactions = eth_data_r.wallet_transactions(address)
     return render_template('wallet_page.html', page=address, balance=wallet_balance , transactions=wallet_transactions, user=current_user, is_f=is_followed)
+
+
+@app.route('/profile/followed_wallets', methods=['GET', 'POST'])
+def followed_wallets_page():
+    all_followed_wallets = []
+    for wallet in current_user.followed_wallets:
+        all_followed_wallets.append(wallet.name)
+    
+    followed_wallets_qty = len(all_followed_wallets)
+
+    return render_template('followed_wallets_page.html', all_followed_wallets=all_followed_wallets, followed_wallets_qty=followed_wallets_qty)
 
 
 if __name__ == '__main__':
