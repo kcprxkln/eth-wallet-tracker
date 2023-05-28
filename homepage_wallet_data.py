@@ -15,7 +15,9 @@ def homepage_data(followed_wallets: list):
     
     formatted_data_strings = [{'time': d['time'].strftime('%H:%M, %d-%m-%Y'), 'from': d['from'], 'to': d['to'], 'value': d['value'], 'way': d['way']} for d in sorted_data]
         
-    return formatted_data_strings
+    f_data = [txn for txn in reversed(formatted_data_strings)]
+
+    return f_data
 
 
 
