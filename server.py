@@ -173,6 +173,7 @@ def wallet_page(address):
 
     wallet_balance = eth_data_r.wallet_balance(address)
     wallet_transactions = eth_data_r.wallet_transactions(address)
+    
     return render_template('wallet_page.html', page=address, balance=wallet_balance , transactions=wallet_transactions, user=current_user, is_f=is_followed)
 
 

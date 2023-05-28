@@ -29,9 +29,11 @@
 <div class="row mt-3">
     <ul class="list-group list-group-flush">
     {% for wallet in all_followed_wallets %}
-      <li class="list-group-item">
+    <li class="list-group-item">
         <a href="{{url_for('wallet_page', address=wallet)}}">{{ wallet }}</a>
-        <span class="remove"><a href="#">✖</span>
+        <form action="{{ url_for('wallet_page', address=wallet) }}" method="POST">
+        <input type="hidden" name="wallet" value="{{ wallet }}">
+        <button type="submit" class="remove">✖</button>
       </li>
     {% endfor %}
     </ul>
