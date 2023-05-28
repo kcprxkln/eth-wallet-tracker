@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from models import User, Wallet
 from db_operations import db
 from eth_data_requests import ApiDataFetcher
+import homepage_wallet_data
 import os
 
 ETHERSCAN_APIKEY = os.getenv('etherscan_key')
@@ -32,7 +33,13 @@ eth_data_r = ApiDataFetcher(ETHERSCAN_APIKEY)
 @app.route('/')
 @login_required
 def home():
-    return render_template('home.html', user=current_user)
+    all_followed_wallets = []
+    for wallet in current_user.followed_wallets:
+        all_followed_wallets.append(wallet.name)
+    
+    wallets_data = homepage_wallet_data.homepage_data(all_followed_wallets)
+
+    return render_template('home.html', user=current_user, wallets_data=wallets_data)
 
 
 @app.route('/login', methods=['GET', 'POST'])

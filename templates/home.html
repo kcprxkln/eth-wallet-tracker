@@ -1,11 +1,42 @@
 {% extends 'base.html' %}
 
 {% block main %}
-        <ul>
-            {% for wallet in user.followed_wallets %}
-            <li>
-            {{ wallet.name }}
-            </li>
-            {% endfor %}
-        </ul>
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-4">
+            <div class="dropdown">
+                <a class="btn btn-secondary dropdown-toggle" id="profile-btn" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Profile
+                </a>
+              
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Followed wallets</a></li>
+                  <li><a class="dropdown-item" href="#">Logout</a></li>
+                </ul>
+              </div>
+        </div>
+        <div class="col-4"></div>
+        <div class="col-4">
+            <form class="d-flex wallet-search" role="search" method="POST">
+                <input class="form-control me-2" type="search" placeholder="wallet address" aria-label="Search" name="wallet_address" >
+                <button class="btn btn-outline-success" type="submit" value="Submit" name="search_wallet">Search</button>
+            </form> 
+        </div> 
+    </div>    
+
+    {% for transaction in wallets_data %}
+    <div class="container mt-5">
+        <div class="row mt-3 ">
+            <div class="col-3"></div>
+                <div class="col-6 transaction-card-2">
+                    <p id="tx-info">{{ transaction['way']}}, {{transaction['time']}}</p>
+                       <p><a href='#' class="wallet">{{ transaction['from'] }}</a></p>
+                       <p>to <a href="#" class="wallet">{{ transaction['to'] }}</a></p>
+                    <p id="amount"> {{ transaction['value'] }}ETH</p>
+        </div>
+            <div class="col-3"></div>
+    </div>
+    {% endfor %}
+    </div>
 {% endblock %}
