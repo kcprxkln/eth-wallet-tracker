@@ -11,3 +11,6 @@ To run the project you need:
 - python with installed libraries from *requirements.txt* file,
 - etherscan key saved as "*etherscan_key*" environment variable
 - postgres database (*DATABASE*)
+
+Issues that I am working on:
+- Homepage - transaction containers are becoming smaller
