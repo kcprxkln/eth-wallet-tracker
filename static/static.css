@@ -94,3 +94,8 @@ a {
     margin-left: auto;
   }
   
+  .no-account{
+    margin-left: 20px;
+    font-style: italic;
+    color: #3484E0;
+  }
