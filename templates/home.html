@@ -25,14 +25,14 @@
         </div> 
     </div>    
 
-    {% for transaction in wallets_data %}
     <div class="container mt-5">
+        {% for transaction in wallets_data %}
         <div class="row mt-3 ">
             <div class="col-3"></div>
                 <div class="col-6 transaction-card-2">
                     <p id="tx-info">{{ transaction['way']}}, {{transaction['time']}}</p>
-                       <p><a href='{{ url_for("wallet_page", address=transaction["from"])}}' class="wallet">{{ transaction['from'] }}</a></p>
-                       <p>to <a href='{{ url_for("wallet_page", address=transaction["to"])}}' class="wallet">{{ transaction['to'] }}</a></p>
+                       <p><u><a href='{{ url_for("wallet_page", address=transaction["from"])}}' class="wallet">{{ transaction['from'] }}</a></u></p>
+                       <p>to <u><a href='{{ url_for("wallet_page", address=transaction["to"])}}' class="wallet">{{ transaction['to'] }}</a></u></p>
                     <p id="amount"> {{ transaction['value'] }} ETH</p>
         </div>
             <div class="col-3"></div>
